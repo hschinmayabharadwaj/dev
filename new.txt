@@ -1,0 +1,33 @@
+FROM python:3.10-alpine
+WORKDIR /app
+
+COPY . /app
+RUN pip install -r requirements.txt
+EXPOSE 5000
+CMD ["python", "app.py"]
+
+
+
+# Use official GCC image for compiling C code
+FROM gcc:latest
+
+# Set working directory
+WORKDIR /app
+
+# Copy all files into the container
+COPY . /app
+
+# Compile and run the C program
+RUN gcc program.c -o program
+CMD ["./program"]
+
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY Sample.java .
+RUN javac Sample.java
+CMD ["java", "Sample"]
+
+
+FROM httpd:latest
+COPY index.html /usr/local/apache2/htdocs/
